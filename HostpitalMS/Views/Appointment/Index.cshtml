@@ -1,0 +1,102 @@
+﻿@* <h1>Complete Appointment with @Model.Name</h1> *@
+
+@* <form id="appointmentForm" action="/Appointment/AddAppointment"> *@
+@*     <div class="form-group"> *@
+@*         <label for="patientName">Patient Name:</label> *@
+@*         <input type="text" class="form-control" id="patientName" name="patientName"> *@
+@*     </div> *@
+@*     <div class="form-group"> *@
+@*         <label for="appointmentDate">Appointment Date:</label> *@
+@*         <input type="date" class="form-control" id="appointmentDate" name="appointmentDate"> *@
+@*     </div> *@
+@*     <div class="form-group"> *@
+@*         <label for="appointmentTime">Appointment Time:</label> *@
+@*         <input type="time" class="form-control" id="appointmentTime" name="appointmentTime"> *@
+@*     </div> *@
+@*     <br /> *@
+@*     <button type="submit" class="btn btn-primary" id="submitBtn">Complete Appointment</button> *@
+@* </form> *@
+
+
+@* div class="modal" tabindex="-1" role="dialog"> *@
+@* <div class="modal-dialog" role="document"> *@
+@*     <div class="modal-content"> *@
+@*         <div class="modal-header"> *@
+@*             <h5 class="modal-title">Appointment Completed</h5> *@
+@*             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> *@
+@*                 <span aria-hidden="true">&times;</span> *@
+@*             </button> *@
+@*         </div> *@
+@*         <div class="modal-body"> *@
+@*             <p>Your appointment has been successfully completed. Thank you!</p> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+@* </div> *@
+
+<h1>Complete Appointment with @Model.Name</h1>
+
+<form id="appointmentForm" action="/Appointment/AddAppointment" method="post">
+    <div class="form-group">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" class="form-control" id="patientName" name="patientName" required>
+    </div>
+    <div class="form-group">
+        <label for="appointmentDate">Appointment Date:</label>
+        <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" required>
+    </div>
+    <div class="form-group">
+        <label for="appointmentTime">Appointment Time:</label>
+        <input type="time" class="form-control" id="appointmentTime" name="appointmentTime" required>
+    </div>
+    <input type="hidden" id="DoctorId" name="DoctorId" value="@Model.Id" />
+    <br />
+    <button type="submit" class="btn btn-primary" id="submitBtn">Complete Appointment</button>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Appointment Completed</h5>
+            </div>
+            <div class="modal-body">
+                <p>Your appointment has been successfully completed. Thank you!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Handle form submission
+        $('#appointmentForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Get form data
+               var formData = {
+        patientName: $('#patientName').val(),
+        appointmentDate: $('#appointmentDate').val(),
+        appointmentTime: $('#appointmentTime').val(),
+        DoctorId: $('#DoctorId').val()  // Include the hidden DoctorId value
+    };
+
+            // Submit form data via AJAX
+            $.ajax({
+                url: '/Appointment/AddAppointment',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Show the modal on success
+                    $('#successModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors (optional)
+                    alert('An error occurred while submitting the form.');
+                }
+            });
+        });
+    });
+</script>

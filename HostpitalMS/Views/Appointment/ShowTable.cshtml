@@ -1,0 +1,20 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+            <th>Doctor Name</th>
+        </tr>
+    </thead>
+    <tbody>
+      @foreach(var Appointment in Model){
+            <tr>
+                <td>@Appointment.patientName</td>
+                <td>@Appointment.AppointmentDate</td>
+                <td>@Appointment.AppointmentTime</td>
+                <td>@Appointment.Doctor.Name</td>
+            </tr>
+      }
+    </tbody>
+</table>
